@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Find a Donor | LifeLine Finder{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">DONOR DIRECTORY</span><h1>Find a potential donor</h1><p>Search registered donors by blood group and city.</p></div></section>
+<section class="container content-section">
+<form class="search-panel" method="get">
+  <label>Blood group<select name="blood_group"><option value="">All blood groups</option>{% for b in ['A+','A-','B+','B-','AB+','AB-','O+','O-'] %}<option value="{{ b }}" {% if blood_group==b %}selected{% endif %}>{{ b }}</option>{% endfor %}</select></label>
+  <label>City / area<input name="city" value="{{ city }}" placeholder="Enter city or area"></label>
+  <button class="btn btn-primary" type="submit">Search donors</button>
+  <a class="btn btn-light" href="{{ url_for('find_donor') }}">Clear</a>
+</form>
+<div class="results-heading"><h2>{{ donors|length }} potential donor{{ '' if donors|length == 1 else 's' }} found</h2><span>Showing donors who marked themselves available</span></div>
+{% if donors %}<div class="donor-grid">{% for d in donors %}
+  <article class="donor-card"><div class="donor-avatar">{{ d.blood_group }}</div><div class="donor-info"><h3>{{ d.name }}</h3><p>⌖ {{ d.city }}</p><span class="available-label"><i></i> Available</span></div><div class="donor-contact"><span>Contact</span><a href="tel:{{ d.phone }}">{{ d.phone }}</a></div></article>
+{% endfor %}</div>
+{% else %}<div class="empty-state"><span>⌕</span><h3>No matching donors found</h3><p>Try another blood group or city, or check back later.</p><a class="btn btn-primary" href="{{ url_for('register') }}">Register as a donor</a></div>{% endif %}
+<div class="notice-box"><strong>Please note:</strong> A listing does not confirm donor eligibility or blood compatibility. Verify all details and coordinate through a hospital or licensed blood bank.</div>
+</section>
+{% endblock %}

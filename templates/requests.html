@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Blood Requests | LifeLine Finder{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">COMMUNITY REQUESTS</span><h1>Blood requests</h1><p>Review current requests shared with the community.</p></div></section>
+<section class="container content-section">
+<form class="filter-row" method="get"><label>Filter by status <select name="status"><option value="">All statuses</option>{% for s in ['Pending','Accepted','Fulfilled','Cancelled'] %}<option {% if selected_status==s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label><button class="btn btn-primary" type="submit">Apply filter</button></form>
+{% if requests %}<div class="table-wrap"><table><thead><tr><th>Blood group</th><th>Location / hospital</th><th>Units</th><th>Urgency</th><th>Status</th><th>Submitted</th></tr></thead><tbody>{% for r in requests %}<tr><td><span class="blood-badge">{{ r.blood_group }}</span></td><td><strong>{{ r.city }}</strong><small>{{ r.hospital }}</small></td><td>{{ r.units }}</td><td><span class="urgency urgency-{{ r.urgency|lower }}">{{ r.urgency }}</span></td><td><span class="status status-{{ r.status|lower }}">{{ r.status }}</span></td><td>{{ r.created_at }}</td></tr>{% endfor %}</tbody></table></div>
+{% else %}<div class="empty-state"><span>♡</span><h3>No requests to display</h3><p>There are no requests matching this filter.</p><a class="btn btn-primary" href="{{ url_for('request_blood') }}">Create a request</a></div>{% endif %}
+</section>
+{% endblock %}
