@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Become a Donor | LifeLine Finder{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">JOIN THE COMMUNITY</span><h1>Become a blood donor</h1><p>Register your details so people can find potential donors in your area.</p></div></section>
+<section class="form-section container"><form class="form-card" method="post">
+  <div class="form-heading"><span class="form-icon">♡</span><div><h2>Create your donor profile</h2><p>Fields marked * are required.</p></div></div>
+  <div class="form-grid">
+    <label>Full name *<input name="name" required maxlength="100" autocomplete="name" placeholder="Your full name"></label>
+    <label>Email address *<input type="email" name="email" required maxlength="150" autocomplete="email" placeholder="you@example.com"></label>
+    <label>Password *<input type="password" name="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></label>
+    <label>Blood group *<select name="blood_group" required><option value="">Select blood group</option>{% for b in ['A+','A-','B+','B-','AB+','AB-','O+','O-'] %}<option>{{ b }}</option>{% endfor %}</select></label>
+    <label>City / area *<input name="city" required maxlength="100" placeholder="e.g. Chennai"></label>
+    <label>Contact phone *<input name="phone" required type="tel" maxlength="25" autocomplete="tel" placeholder="Your contact number"></label>
+  </div>
+  <div class="privacy-note">Your details will be used to help connect you with potential requesters. Only register contact information you are comfortable sharing.</div>
+  <button class="btn btn-primary btn-full" type="submit">Create donor account →</button>
+  <p class="form-foot">Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+</form></section>
+{% endblock %}
