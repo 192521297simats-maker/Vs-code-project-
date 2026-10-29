@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard | LifeLine Finder{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">YOUR ACCOUNT</span><h1>Hello, {{ session.get('name','Donor') }}.</h1><p>Manage your availability and view the blood requests you submitted.</p></div></section>
+<section class="container content-section">
+<div class="dashboard-grid">
+  <article class="panel"><div class="panel-heading"><div><span class="eyebrow red-eyebrow">DONOR PROFILE</span><h2>Your availability</h2></div><span class="blood-badge">{{ donor.blood_group if donor else 'N/A' }}</span></div>
+  {% if donor %}<p class="muted">Your profile is listed in donor search when you mark yourself available.</p><div class="profile-line"><span>Name</span><strong>{{ session.get('name') }}</strong></div><div class="profile-line"><span>City</span><strong>{{ donor.city }}</strong></div><div class="profile-line"><span>Contact</span><strong>{{ donor.phone }}</strong></div>
+  <form method="post" action="{{ url_for('availability') }}" class="availability-form"><label for="available">Availability status</label><select id="available" name="available"><option value="1" {% if donor.available %}selected{% endif %}>Available</option><option value="0" {% if not donor.available %}selected{% endif %}>Unavailable</option></select><button class="btn btn-primary" type="submit">Update status</button></form>
+  {% else %}<p>You do not have a donor profile yet.</p><a class="btn btn-primary" href="{{ url_for('register') }}">Register as donor</a>{% endif %}</article>
+  <article class="panel"><div class="panel-heading"><div><span class="eyebrow red-eyebrow">QUICK ACTIONS</span><h2>What would you like to do?</h2></div></div><a class="action-link" href="{{ url_for('find_donor') }}">⌕ <span><strong>Find a donor</strong><small>Search by blood group and city</small></span> →</a><a class="action-link" href="{{ url_for('request_blood') }}">✚ <span><strong>Request blood</strong><small>Submit a new blood request</small></span> →</a><a class="action-link" href="{{ url_for('requests') }}">☷ <span><strong>View requests</strong><small>See community requests</small></span> →</a></article>
+</div>
+<div class="section-heading dashboard-section-heading"><div><span class="eyebrow red-eyebrow">REQUEST HISTORY</span><h2>Your submitted requests</h2></div></div>
+{% if own_requests %}<div class="table-wrap"><table><thead><tr><th>Blood group</th><th>Hospital</th><th>City</th><th>Urgency</th><th>Status</th></tr></thead><tbody>{% for r in own_requests %}<tr><td><span class="blood-badge">{{ r.blood_group }}</span></td><td>{{ r.hospital }}</td><td>{{ r.city }}</td><td>{{ r.urgency }}</td><td><span class="status status-{{ r.status|lower }}">{{ r.status }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state compact"><p>You haven't submitted any blood requests yet.</p><a href="{{ url_for('request_blood') }}">Submit a request →</a></div>{% endif %}
+</section>
+{% endblock %}

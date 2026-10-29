@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Request Blood | LifeLine Finder{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">REQUEST SUPPORT</span><h1>Submit a blood request</h1><p>Share the request details so potential donors can be identified.</p></div></section>
+<section class="form-section container"><form class="form-card" method="post">
+  <div class="form-heading"><span class="form-icon">✚</span><div><h2>Blood request details</h2><p>Please provide accurate contact and hospital information.</p></div></div>
+  <div class="form-grid">
+    <label>Requester name *<input name="requester_name" required maxlength="100" value="{{ session.get('name','') }}" placeholder="Your name"></label>
+    <label>Contact phone *<input name="contact_phone" required type="tel" maxlength="25" placeholder="Phone number"></label>
+    <label>Required blood group *<select name="blood_group" required><option value="">Select blood group</option>{% for b in ['A+','A-','B+','B-','AB+','AB-','O+','O-'] %}<option>{{ b }}</option>{% endfor %}</select></label>
+    <label>Units needed *<input name="units" type="number" min="1" max="20" value="1" required></label>
+    <label>City / area *<input name="city" required maxlength="100" placeholder="City or area"></label>
+    <label>Hospital / blood bank *<input name="hospital" required maxlength="150" placeholder="Hospital name"></label>
+    <label>Urgency<select name="urgency"><option>Critical</option><option selected>Urgent</option><option>Normal</option></select></label>
+    <label class="full-width">Additional details<textarea name="details" rows="4" maxlength="1000" placeholder="Optional information (avoid sharing unnecessary private medical details)"></textarea></label>
+  </div>
+  <div class="urgent-warning"><strong>If this is a medical emergency:</strong> Contact the treating hospital, local emergency services, or a licensed blood bank immediately. Do not wait for website responses.</div>
+  <button class="btn btn-primary btn-full" type="submit">Submit blood request →</button>
+</form></section>
+{% endblock %}

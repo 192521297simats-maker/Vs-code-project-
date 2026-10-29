@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Login | LifeLine Finder{% endblock %}
+{% block content %}
+<section class="page-hero"><div class="container"><span class="eyebrow">WELCOME BACK</span><h1>Log in to LifeLine</h1><p>Manage your donor profile and blood requests.</p></div></section>
+<section class="form-section container"><form class="form-card form-narrow" method="post">
+  <div class="form-heading"><span class="form-icon">↗</span><div><h2>Account login</h2><p>Enter your account details below.</p></div></div>
+  <label>Email address<input type="email" name="email" required autocomplete="email" placeholder="you@example.com"></label>
+  <label>Password<input type="password" name="password" required autocomplete="current-password" placeholder="Your password"></label>
+  <button class="btn btn-primary btn-full" type="submit">Log in →</button>
+  <p class="form-foot">New here? <a href="{{ url_for('register') }}">Register as a donor</a></p>
+  <div class="demo-note"><strong>Local demo admin</strong><br>Email: admin@bloodfinder.local<br>Password: Admin123!</div>
+</form></section>
+{% endblock %}
